@@ -7,7 +7,7 @@ export default function RevenueChart() {
         border-slate-800
         rounded-2xl
         p-6
-        h-[420px]
+        h-105
         transition-all
         duration-300
         hover:border-emerald-400/40
@@ -49,7 +49,7 @@ export default function RevenueChart() {
           flex
           items-center
           justify-center
-          h-[280px]
+          h-70
           rounded-xl
           border-2
           border-dashed

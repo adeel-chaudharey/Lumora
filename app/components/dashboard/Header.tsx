@@ -14,7 +14,7 @@ export default function Header() {
         </h1>
 
         <p className="text-slate-400 mt-2">
-          Welcome back! Here's what's happening in your store today.
+          Welcome back! Here&apos;s what&apos;s happening in your store today.
         </p>
       </div>
 

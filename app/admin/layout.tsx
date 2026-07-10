@@ -7,13 +7,14 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-slate-950 flex">
       <Sidebar />
 
-      <main className="flex-1 p-8">
-        <Header />
-
-        {children}
+      <main className="flex-1 overflow-auto">
+        <div className="p-8">
+          <Header />
+          {children}
+        </div>
       </main>
     </div>
   );
