@@ -10,6 +10,8 @@ export default function ActionButtons() {
       </button>
 
       <button
+
+      //ok
         type="button"
         className="rounded-xl bg-slate-700 px-6 py-3 text-white transition-all duration-300 hover:bg-slate-600"
       >
