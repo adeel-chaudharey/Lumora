@@ -78,3 +78,5 @@ export default function BasicInformation() {
     </div>
   );
 }
+
+//chat gpt  generated, will be removed
