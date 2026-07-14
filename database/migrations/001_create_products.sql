@@ -51,3 +51,5 @@ create table public.products (
 
 alter table public.products
 enable row level security;
+
+//first database migration
