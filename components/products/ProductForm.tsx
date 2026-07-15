@@ -105,3 +105,5 @@ const [formData, setFormData] = useState<ProductFormData>({
     </div>
   );
 }
+
+//for the react use state
