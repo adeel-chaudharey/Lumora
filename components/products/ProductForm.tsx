@@ -107,3 +107,4 @@ const [formData, setFormData] = useState<ProductFormData>({
 }
 
 //for the react use state
+//important part of react hooks is that they allow you to manage state in functional components. In this case, we are using the useState hook to create a state variable called formData, which holds the data for the product form. The setFormData function is used to update the state whenever the user makes changes to the form fields. This allows us to keep track of the user's input and use it when submitting the form or performing other actions.
