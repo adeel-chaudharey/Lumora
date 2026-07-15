@@ -28,3 +28,13 @@ export interface ProductFormData {
 
   videoUrl: string;
 }
+
+
+
+
+import { Dispatch, SetStateAction } from "react";
+
+export type ProductFormProps = {
+  formData: ProductFormData;
+  setFormData: Dispatch<SetStateAction<ProductFormData>>;
+};

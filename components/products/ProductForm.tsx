@@ -78,8 +78,10 @@ const [formData, setFormData] = useState<ProductFormData>({
               formData={formData}
               setFormData={setFormData}
            />
-
-            <PricingSection />
+            <PricingSection
+              formData={formData}
+              setFormData={setFormData}
+            />
 
             <InventorySection />
 
