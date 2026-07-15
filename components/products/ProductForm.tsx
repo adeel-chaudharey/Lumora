@@ -74,7 +74,10 @@ const [formData, setFormData] = useState<ProductFormData>({
       <form className="space-y-8">
                     
 
-            <BasicInformation />
+           <BasicInformation
+              formData={formData}
+              setFormData={setFormData}
+           />
 
             <PricingSection />
 

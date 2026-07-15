@@ -1,4 +1,15 @@
-export default function BasicInformation() {
+import { ProductFormData } from "@/types/product";
+import { Dispatch, SetStateAction } from "react";
+
+type BasicInformationProps = {
+  formData: ProductFormData;
+  setFormData: Dispatch<SetStateAction<ProductFormData>>;
+};
+
+export default function BasicInformation({
+  formData,
+  setFormData,
+}: BasicInformationProps) {
   return (
     <div className="rounded-2xl bg-slate-900 border border-slate-800 p-8">
 
@@ -26,13 +37,20 @@ export default function BasicInformation() {
           <label className="block text-sm text-slate-300 mb-2">
             Slug
           </label>
+          
+       <input
+          type="text"
+         placeholder="macbook-pro-m4" 
+         value={formData.slug}
+         onChange={(e) =>
+         setFormData({
+          ...formData,
+         slug: e.target.value,
+        })
+  }
+  className="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none focus:border-emerald-400"
+/>
 
-          <input
-            type="text"
-            placeholder="macbook-pro-m4"
-            className="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none focus:border-emerald-400"
-          />
-        </div>
 
         {/* Category */}
         <div>
@@ -53,12 +71,18 @@ export default function BasicInformation() {
             Short Description
           </label>
 
-          <textarea
-            rows={3}
-            placeholder="Short summary..."
-            className="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none resize-none focus:border-emerald-400"
-          />
-        </div>
+         <textarea
+  rows={3}
+  placeholder="Short summary..."
+  value={formData.shortDescription}
+  onChange={(e) =>
+    setFormData({
+      ...formData,
+      shortDescription: e.target.value,
+    })
+  }
+  className="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none resize-none focus:border-emerald-400"
+/>
 
         {/* Full Description */}
         <div className="col-span-2">
