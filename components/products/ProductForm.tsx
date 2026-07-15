@@ -83,13 +83,22 @@ const [formData, setFormData] = useState<ProductFormData>({
               setFormData={setFormData}
             />
 
-            <InventorySection />
+           <InventorySection
+              formData={formData}
+              setFormData={setFormData}
+            />
 
-            <MediaSection />
+            <MediaSection
+              formData={formData}
+              setFormData={setFormData}
+            />
 
-            <SEOSection />
+            <SEOSection
+              formData={formData}
+              setFormData={setFormData}
+            />
 
-            <ActionButtons />
+            <ActionButtons isLoading={false} />
 
       </form>
 

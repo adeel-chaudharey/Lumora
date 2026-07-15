@@ -1,13 +1,22 @@
-export default function InventorySection() {
+import { ProductFormData } from "@/types/product";
+import { Dispatch, SetStateAction } from "react";
+
+type InventorySectionProps = {
+  formData: ProductFormData;
+  setFormData: Dispatch<SetStateAction<ProductFormData>>;
+};
+
+export default function InventorySection({
+  formData,
+  setFormData,
+}: InventorySectionProps) {
   return (
     <div className="rounded-2xl bg-slate-900 border border-slate-800 p-8">
-
       <h2 className="text-2xl font-semibold text-white mb-8">
         Inventory
       </h2>
 
       <div className="grid grid-cols-2 gap-6">
-
         {/* SKU */}
         <div>
           <label className="block text-sm text-slate-300 mb-2">
@@ -17,6 +26,13 @@ export default function InventorySection() {
           <input
             type="text"
             placeholder="SKU-10001"
+            value={formData.sku}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                sku: e.target.value,
+              })
+            }
             className="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none focus:border-emerald-400"
           />
         </div>
@@ -30,6 +46,13 @@ export default function InventorySection() {
           <input
             type="text"
             placeholder="1234567890123"
+            value={formData.barcode}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                barcode: e.target.value,
+              })
+            }
             className="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none focus:border-emerald-400"
           />
         </div>
@@ -43,11 +66,18 @@ export default function InventorySection() {
           <input
             type="number"
             placeholder="50"
+            value={formData.stock}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                stock: Number(e.target.value),
+              })
+            }
             className="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none focus:border-emerald-400"
           />
         </div>
 
-        {/* Low Stock */}
+        {/* Low Stock Alert */}
         <div>
           <label className="block text-sm text-slate-300 mb-2">
             Low Stock Alert
@@ -56,6 +86,13 @@ export default function InventorySection() {
           <input
             type="number"
             placeholder="10"
+            value={formData.lowStockAlert}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                lowStockAlert: Number(e.target.value),
+              })
+            }
             className="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none focus:border-emerald-400"
           />
         </div>
@@ -69,6 +106,13 @@ export default function InventorySection() {
           <input
             type="number"
             placeholder="1.5"
+            value={formData.weight}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                weight: Number(e.target.value),
+              })
+            }
             className="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none focus:border-emerald-400"
           />
         </div>
@@ -82,15 +126,20 @@ export default function InventorySection() {
           <input
             type="text"
             placeholder="Apple"
+            value={formData.brand}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                brand: e.target.value,
+              })
+            }
             className="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none focus:border-emerald-400"
           />
         </div>
-
       </div>
 
       {/* Inventory Settings */}
       <div className="mt-8 space-y-5">
-
         <label className="flex items-center gap-3 text-slate-300">
           <input
             type="checkbox"
@@ -106,9 +155,7 @@ export default function InventorySection() {
           />
           Continue Selling When Out of Stock
         </label>
-
       </div>
-
     </div>
   );
 }
