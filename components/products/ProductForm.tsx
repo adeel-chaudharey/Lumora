@@ -17,41 +17,48 @@ import SEOSection from "./sections/SEOSection";
 import ActionButtons from "./sections/ActionButtons";
 
 // other imports...
+type ProductFormProps = {
+  initialData?: ProductFormData;
+  productId?: string;
+};
 
-export default function ProductForm() {
-
+export default function ProductForm({
+  initialData,
+  productId,
+}: ProductFormProps) {
    // State for form data.day 4 of ecom chat gpt
+const [formData, setFormData] = useState<ProductFormData>(
+  initialData ?? {
+    name: "",
+    slug: "",
 
-const [formData, setFormData] = useState<ProductFormData>({
-  name: "",
-  slug: "",
+    shortDescription: "",
+    description: "",
 
-  shortDescription: "",
-  description: "",
+    categoryId: "",
 
-  categoryId: "",
+    price: 0,
+    comparePrice: 0,
+    costPrice: 0,
 
-  price: 0,
-  comparePrice: 0,
-  costPrice: 0,
+    tax: 0,
+    currency: "USD",
 
-  tax: 0,
-  currency: "USD",
+    sku: "",
+    barcode: "",
 
-  sku: "",
-  barcode: "",
+    stock: 0,
+    lowStockAlert: 0,
 
-  stock: 0,
-  lowStockAlert: 0,
+    weight: 0,
+    brand: "",
 
-  weight: 0,
-  brand: "",
+    seoTitle: "",
+    seoDescription: "",
 
-  seoTitle: "",
-  seoDescription: "",
-
-  videoUrl: "",
-});
+    videoUrl: "",
+  }
+);
 
 const [isLoading, setIsLoading] = useState(false);
 const supabase = createClient();
@@ -64,29 +71,38 @@ const handleSubmit = async (
 
   setIsLoading(true);
 
- const { error } = await supabase
-  .from("products")
-  .insert([
-    {
-      name: formData.name,
-      slug: formData.slug,
-      short_description: formData.shortDescription,
-      description: formData.description,
-      price: formData.price,
-      compare_price: formData.comparePrice,
-      sku: formData.sku,
-      stock: formData.stock,
-      brand: formData.brand,
-      weight: formData.weight,
-      video_url: formData.videoUrl,
-      seo_title: formData.seoTitle,
-      seo_description: formData.seoDescription,
-      category_id:
-        formData.categoryId === ""
-          ? null
-          : formData.categoryId,
-    },
-  ]);
+const productData = {
+  name: formData.name,
+  slug: formData.slug,
+  short_description: formData.shortDescription,
+  description: formData.description,
+  price: formData.price,
+  compare_price: formData.comparePrice,
+  sku: formData.sku,
+  stock: formData.stock,
+  brand: formData.brand,
+  weight: formData.weight,
+  video_url: formData.videoUrl,
+  seo_title: formData.seoTitle,
+  seo_description: formData.seoDescription,
+  category_id:
+    formData.categoryId === ""
+      ? null
+      : formData.categoryId,
+};
+
+let error;
+
+if (productId) {
+  ({ error } = await supabase
+    .from("products")
+    .update(productData)
+    .eq("id", productId));
+} else {
+  ({ error } = await supabase
+    .from("products")
+    .insert([productData]));
+}
 if (error) {
   console.log("Supabase Error:");
   console.log(error);

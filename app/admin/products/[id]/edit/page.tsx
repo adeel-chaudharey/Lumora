@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
-
+import ProductForm from "@/components/products/ProductForm";
 type PageProps = {
   params: Promise<{
     id: string;
@@ -28,16 +28,41 @@ export default async function EditProductPage({
       </div>
     );
   }
+return (
+  <div className="p-8">
+    <ProductForm
+  productId={product.id}
+  initialData={{
+        name: product.name,
+        slug: product.slug,
 
-  return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold text-white">
-        Edit Product
-      </h1>
+        shortDescription: product.short_description ?? "",
+        description: product.description ?? "",
 
-      <pre className="mt-8 rounded-xl bg-slate-900 p-4 text-white overflow-auto">
-        {JSON.stringify(product, null, 2)}
-      </pre>
-    </div>
-  );
+        categoryId: product.category_id ?? "",
+
+        price: product.price ?? 0,
+        comparePrice: product.compare_price ?? 0,
+        costPrice: 0,
+
+        tax: 0,
+        currency: "USD",
+
+        sku: product.sku ?? "",
+        barcode: "",
+
+        stock: product.stock ?? 0,
+        lowStockAlert: 0,
+
+        weight: product.weight ?? 0,
+        brand: product.brand ?? "",
+
+        seoTitle: product.seo_title ?? "",
+        seoDescription: product.seo_description ?? "",
+
+        videoUrl: product.video_url ?? "",
+      }}
+    />
+  </div>
+);
 }
