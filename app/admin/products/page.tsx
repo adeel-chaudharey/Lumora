@@ -1,9 +1,73 @@
-import React from 'react'
+import { cookies } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
 
-const page = () => {
+export default async function ProductsPage() {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+
+  const result = await supabase
+    .from("products")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  const products = result.data ?? [];
+
   return (
-    <div>page</div>
-  )
-}
+    <div className="p-8">
+      <h1 className="text-3xl font-bold text-white mb-8">
+        Products
+      </h1>
 
-export default page
+      <div className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900">
+        <table className="min-w-full">
+          <thead className="border-b border-slate-800 bg-slate-950">
+            <tr>
+              <th className="px-6 py-4 text-left text-slate-300">
+                Product
+              </th>
+
+              <th className="px-6 py-4 text-left text-slate-300">
+                Price
+              </th>
+
+              <th className="px-6 py-4 text-left text-slate-300">
+                Stock
+              </th>
+
+              <th className="px-6 py-4 text-left text-slate-300">
+                Status
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {products.map((product) => (
+              <tr
+                key={product.id}
+                className="border-b border-slate-800 hover:bg-slate-800/40"
+              >
+                <td className="px-6 py-4 text-white">
+                  {product.name}
+                </td>
+
+                <td className="px-6 py-4 text-emerald-400">
+                  ${product.price}
+                </td>
+
+                <td className="px-6 py-4 text-white">
+                  {product.stock}
+                </td>
+
+                <td className="px-6 py-4">
+                  <span className="rounded-full bg-yellow-500/20 px-3 py-1 text-sm text-yellow-400">
+                    {product.status}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}

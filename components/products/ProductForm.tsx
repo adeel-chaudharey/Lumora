@@ -64,7 +64,40 @@ const handleSubmit = async (
 
   setIsLoading(true);
 
-  console.log(formData);
+ const { error } = await supabase
+  .from("products")
+  .insert([
+    {
+      name: formData.name,
+      slug: formData.slug,
+      short_description: formData.shortDescription,
+      description: formData.description,
+      price: formData.price,
+      compare_price: formData.comparePrice,
+      sku: formData.sku,
+      stock: formData.stock,
+      brand: formData.brand,
+      weight: formData.weight,
+      video_url: formData.videoUrl,
+      seo_title: formData.seoTitle,
+      seo_description: formData.seoDescription,
+      category_id:
+        formData.categoryId === ""
+          ? null
+          : formData.categoryId,
+    },
+  ]);
+if (error) {
+  console.log("Supabase Error:");
+  console.log(error);
+  console.log(error.message);
+  console.log(error.details);
+  console.log(error.hint);
+  console.log(error.code);
+  return;
+}
+
+console.log("Product Added Successfully ✅");
 
   setIsLoading(false);
 };
