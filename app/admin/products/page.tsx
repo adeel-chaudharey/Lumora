@@ -1,5 +1,10 @@
+import Link from "next/link";
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
+
+
+import DeleteButton from "@/components/products/sections/DeleteButton";
+
 
 export default async function ProductsPage() {
   const cookieStore = await cookies();
@@ -14,7 +19,7 @@ export default async function ProductsPage() {
 
   return (
     <div className="p-8">
-      <h1 className="text-3xl font-bold text-white mb-8">
+      <h1 className="mb-8 text-3xl font-bold text-white">
         Products
       </h1>
 
@@ -36,6 +41,10 @@ export default async function ProductsPage() {
 
               <th className="px-6 py-4 text-left text-slate-300">
                 Status
+              </th>
+
+              <th className="px-6 py-4 text-center text-slate-300">
+                Actions
               </th>
             </tr>
           </thead>
@@ -62,6 +71,20 @@ export default async function ProductsPage() {
                   <span className="rounded-full bg-yellow-500/20 px-3 py-1 text-sm text-yellow-400">
                     {product.status}
                   </span>
+                </td>
+
+                <td className="px-6 py-4">
+                  <div className="flex justify-center gap-3">
+
+                    <Link
+                      href={`/admin/products/${product.id}/edit`}
+                      className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-emerald-500"
+                    >
+                      Update
+                    </Link>
+<DeleteButton id={product.id} />
+
+                  </div>
                 </td>
               </tr>
             ))}
