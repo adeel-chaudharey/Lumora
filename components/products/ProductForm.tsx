@@ -62,7 +62,7 @@ const [formData, setFormData] = useState<ProductFormData>(
 
 const [isLoading, setIsLoading] = useState(false);
 const supabase = createClient();
-
+console.log("Product ID:", productId);
 
 const handleSubmit = async (
   e: React.FormEvent<HTMLFormElement>

@@ -1,15 +1,14 @@
 import { cookies } from "next/headers";
-import { createClient } from "@/utils/supabase/server";
+import { notFound } from "next/navigation";
+
 import ProductForm from "@/components/products/ProductForm";
-type PageProps = {
-  params: Promise<{
-    id: string;
-  }>;
-};
+import { createClient } from "@/utils/supabase/server";
 
 export default async function EditProductPage({
   params,
-}: PageProps) {
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
 
   const cookieStore = await cookies();
@@ -22,19 +21,15 @@ export default async function EditProductPage({
     .single();
 
   if (error || !product) {
-    return (
-      <div className="p-8 text-red-500">
-        Product not found.
-      </div>
-    );
+    notFound();
   }
-return (
-  <div className="p-8">
+
+  return (
     <ProductForm
-  productId={product.id}
-  initialData={{
-        name: product.name,
-        slug: product.slug,
+      productId={id}
+      initialData={{
+        name: product.name ?? "",
+        slug: product.slug ?? "",
 
         shortDescription: product.short_description ?? "",
         description: product.description ?? "",
@@ -63,6 +58,5 @@ return (
         videoUrl: product.video_url ?? "",
       }}
     />
-  </div>
-);
+  );
 }
