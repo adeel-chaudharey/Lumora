@@ -2,8 +2,8 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 
-
 import DeleteButton from "@/components/products/sections/DeleteButton";
+// Inline simple delete form (original DeleteButton component not found)
 
 
 export default async function ProductsPage() {
