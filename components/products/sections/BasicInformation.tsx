@@ -1,26 +1,48 @@
+"use client";
 
 import { ProductFormData } from "@/types/product";
-import type { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 type BasicInformationProps = {
   formData: ProductFormData;
   setFormData: Dispatch<SetStateAction<ProductFormData>>;
 };
 
+type Category = {
+  id: string;
+  name: string;
+};
+
 export default function BasicInformation({
   formData,
   setFormData,
 }: BasicInformationProps) {
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    async function loadCategories() {
+      try {
+        const res = await fetch("/api/categories");
+        const data = await res.json();
+        setCategories(data);
+      } catch (error) {
+        console.error("Failed to load categories:", error);
+      }
+    }
+
+    loadCategories();
+  }, []);
+
   return (
-    <div className="rounded-2xl bg-slate-900 border border-slate-800 p-8">
-      <h2 className="text-2xl font-semibold text-white mb-8">
+    <div className="rounded-2xl border border-slate-800 bg-slate-900 p-8">
+      <h2 className="mb-8 text-2xl font-semibold text-white">
         Basic Information
       </h2>
 
       <div className="grid grid-cols-2 gap-6">
         {/* Product Name */}
         <div className="col-span-2">
-          <label className="block text-sm text-slate-300 mb-2">
+          <label className="mb-2 block text-sm text-slate-300">
             Product Name
           </label>
 
@@ -34,13 +56,13 @@ export default function BasicInformation({
                 name: e.target.value,
               })
             }
-            className="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none transition-all duration-300 focus:border-emerald-400"
+            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition-all duration-300 focus:border-emerald-400"
           />
         </div>
 
         {/* Slug */}
         <div>
-          <label className="block text-sm text-slate-300 mb-2">
+          <label className="mb-2 block text-sm text-slate-300">
             Slug
           </label>
 
@@ -54,13 +76,13 @@ export default function BasicInformation({
                 slug: e.target.value,
               })
             }
-            className="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none focus:border-emerald-400"
+            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none focus:border-emerald-400"
           />
         </div>
 
         {/* Category */}
         <div>
-          <label className="block text-sm text-slate-300 mb-2">
+          <label className="mb-2 block text-sm text-slate-300">
             Category
           </label>
 
@@ -72,15 +94,24 @@ export default function BasicInformation({
                 categoryId: e.target.value,
               })
             }
-            className="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none focus:border-emerald-400"
+            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none focus:border-emerald-400"
           >
             <option value="">Select Category</option>
+
+            {categories.map((category) => (
+              <option
+                key={category.id}
+                value={category.id}
+              >
+                {category.name}
+              </option>
+            ))}
           </select>
         </div>
 
         {/* Short Description */}
         <div className="col-span-2">
-          <label className="block text-sm text-slate-300 mb-2">
+          <label className="mb-2 block text-sm text-slate-300">
             Short Description
           </label>
 
@@ -94,13 +125,13 @@ export default function BasicInformation({
                 shortDescription: e.target.value,
               })
             }
-            className="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none resize-none focus:border-emerald-400"
+            className="w-full resize-none rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none focus:border-emerald-400"
           />
         </div>
 
         {/* Full Description */}
         <div className="col-span-2">
-          <label className="block text-sm text-slate-300 mb-2">
+          <label className="mb-2 block text-sm text-slate-300">
             Full Description
           </label>
 
@@ -114,7 +145,7 @@ export default function BasicInformation({
                 description: e.target.value,
               })
             }
-            className="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none resize-none focus:border-emerald-400"
+            className="w-full resize-none rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none focus:border-emerald-400"
           />
         </div>
       </div>
