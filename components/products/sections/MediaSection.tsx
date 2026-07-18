@@ -4,11 +4,15 @@ import { Dispatch, SetStateAction } from "react";
 type MediaSectionProps = {
   formData: ProductFormData;
   setFormData: Dispatch<SetStateAction<ProductFormData>>;
+  imageFile: File | null;
+  setImageFile: Dispatch<SetStateAction<File | null>>;
 };
 
 export default function MediaSection({
   formData,
   setFormData,
+  imageFile,
+  setImageFile,
 }: MediaSectionProps) {
   return (
     <div className="rounded-2xl bg-slate-900 border border-slate-800 p-8">
@@ -31,10 +35,35 @@ export default function MediaSection({
 
         <button
           type="button"
+          onClick={() =>
+            document
+              .getElementById("product-image")
+              ?.click()
+          }
           className="mt-8 rounded-xl bg-emerald-500 px-6 py-3 font-semibold text-slate-950 transition-all duration-300 hover:scale-105 hover:bg-emerald-400"
         >
           Browse Files
         </button>
+
+        <input
+          id="product-image"
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+
+            if (file) {
+              setImageFile(file);
+            }
+          }}
+        />
+
+        {imageFile && (
+          <p className="mt-4 text-sm text-emerald-400">
+            Selected: {imageFile.name}
+          </p>
+        )}
       </div>
 
       <div className="mt-8">

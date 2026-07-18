@@ -59,7 +59,7 @@ const [formData, setFormData] = useState<ProductFormData>(
     videoUrl: "",
   }
 );
-
+const [imageFile, setImageFile] = useState<File | null>(null);
 const [isLoading, setIsLoading] = useState(false);
 const supabase = createClient();
 console.log("Product ID:", productId);
@@ -70,6 +70,30 @@ const handleSubmit = async (
   e.preventDefault();
 
   setIsLoading(true);
+
+
+let imageUrl: string | null = null;
+
+if (imageFile) {
+  const fileName = `${Date.now()}-${imageFile.name}`;
+
+  const { error: uploadError } = await supabase.storage
+    .from("products")
+    .upload(fileName, imageFile);
+
+  if (uploadError) {
+    console.error(uploadError);
+    setIsLoading(false);
+    return;
+  }
+
+  const { data } = supabase.storage
+    .from("products")
+    .getPublicUrl(fileName);
+
+  imageUrl = data.publicUrl;
+}
+
 
 const productData = {
   name: formData.name,
@@ -83,6 +107,9 @@ const productData = {
   brand: formData.brand,
   weight: formData.weight,
   video_url: formData.videoUrl,
+
+image_url: imageUrl,
+
   seo_title: formData.seoTitle,
   seo_description: formData.seoDescription,
   category_id:
@@ -154,11 +181,12 @@ console.log("Product Added Successfully ✅");
               formData={formData}
               setFormData={setFormData}
             />
-
-            <MediaSection
-              formData={formData}
-              setFormData={setFormData}
-            />
+<MediaSection
+  formData={formData}
+  setFormData={setFormData}
+  imageFile={imageFile}
+  setImageFile={setImageFile}
+/>
 
             <SEOSection
               formData={formData}
