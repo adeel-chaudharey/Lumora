@@ -3,8 +3,8 @@ import Image from "next/image";
 type Product = {
   id: string;
   name: string;
-  price: number;
   stock: number;
+  low_stock_alert: number;
   image_url: string | null;
 };
 
@@ -12,19 +12,19 @@ type Props = {
   products: Product[];
 };
 
-export default function TopProducts({
+export default function LowStockProducts({
   products,
 }: Props) {
   return (
     <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
       <h2 className="mb-6 text-xl font-semibold text-white">
-        Latest Products
+        Low Stock Products
       </h2>
 
       <div className="space-y-4">
         {products.length === 0 ? (
-          <p className="text-slate-400">
-            No products found.
+          <p className="text-emerald-400">
+            🎉 All products are sufficiently stocked.
           </p>
         ) : (
           products.map((product) => (
@@ -52,14 +52,14 @@ export default function TopProducts({
                     {product.name}
                   </p>
 
-                  <p className="text-sm text-slate-400">
+                  <p className="text-sm text-red-400">
                     Stock: {product.stock}
                   </p>
                 </div>
               </div>
 
-              <span className="font-semibold text-emerald-400">
-                ${product.price}
+              <span className="rounded-full bg-red-500/20 px-3 py-1 text-sm text-red-400">
+                Alert: {product.low_stock_alert}
               </span>
             </div>
           ))

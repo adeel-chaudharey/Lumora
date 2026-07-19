@@ -3,20 +3,17 @@ import { createClient } from "@/utils/supabase/server";
 
 import StatsCard from "../../components/dashboard/StatsCard";
 import RevenueChart from "../../components/dashboard/RevenueChart";
-
-
-
+import LowStockProducts from "../../components/dashboard/LowStockProducts";
+import TopProducts from "../../components/dashboard/TopProducts";
+import RecentOrders from "../../components/dashboard/RecentOrders";
 
 // Placeholder components
 function SalesChart() {
   return <div className="card">Sales Chart</div>;
 }
-const RecentOrders = () => <div className="card">Recent Orders</div>;
-const LatestCustomers = () => <div className="card">Latest Customers</div>;
-// TopProducts component file was causing a TS module error in some setups.
-// Provide a simple local placeholder to avoid build-time module resolution issues.
 
-const LowStockProducts = () => <div className="card">Low Stock Products</div>;
+const LatestCustomers = () => <div className="card">Latest Customers</div>;
+
 const RecentReviews = () => <div className="card">Recent Reviews</div>;
 const ActivityFeed = () => <div className="card">Activity Feed</div>;
 const QuickActions = () => <div className="card">Quick Actions</div>;
@@ -35,11 +32,13 @@ import {
 export default async function DashboardPage() {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
-
-  const [
+const [
   { count: productCount },
   { count: categoryCount },
+  { data: orders },
   { data: latestProducts },
+  { data: lowStockProducts },
+  { count: orderCount },
 ] = await Promise.all([
   supabase
     .from("products")
@@ -54,13 +53,81 @@ export default async function DashboardPage() {
       count: "exact",
       head: true,
     }),
-
+supabase
+  .from("orders")
+  .select("total, created_at"),
   supabase
     .from("products")
     .select("id, name, price, stock, image_url")
     .order("created_at", { ascending: false })
     .limit(5),
+
+  supabase
+    .from("products")
+    .select(
+      "id, name, stock, low_stock_alert, image_url"
+    )
+    .lte("stock", 10)
+    .order("stock", { ascending: true })
+    .limit(5),
+
+supabase
+  .from("orders")
+  .select("*", {
+    count: "exact",
+    head: true,
+  }),
+
+
 ]);
+
+
+
+const today = new Date();
+
+const todayRevenue =
+  orders
+    ?.filter((order) => {
+      const orderDate = new Date(order.created_at);
+
+      return (
+        orderDate.getDate() === today.getDate() &&
+        orderDate.getMonth() === today.getMonth() &&
+        orderDate.getFullYear() === today.getFullYear()
+      );
+    })
+    .reduce(
+      (sum, order) => sum + Number(order.total),
+      0
+    ) ?? 0;
+
+
+
+const currentMonth = today.getMonth();
+const currentYear = today.getFullYear();
+
+const monthlyRevenue =
+  orders
+    ?.filter((order) => {
+      const orderDate = new Date(order.created_at);
+
+      return (
+        orderDate.getMonth() === currentMonth &&
+        orderDate.getFullYear() === currentYear
+      );
+    })
+    .reduce(
+      (sum, order) => sum + Number(order.total),
+      0
+    ) ?? 0;
+
+
+const averageOrderValue =
+  orderCount && orderCount > 0
+    ? monthlyRevenue / orderCount
+    : 0;
+
+
 
   return (
     <div className="space-y-8">
@@ -69,7 +136,7 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-4 gap-6">
         <StatsCard
           title="Today's Revenue"
-          value="$12,540"
+          value={`$${todayRevenue.toFixed(2)}`}
           description="Compared to yesterday"
           change="+12.4%"
           trend="up"
@@ -78,7 +145,7 @@ export default async function DashboardPage() {
 
         <StatsCard
           title="Monthly Revenue"
-          value="$87,200"
+          value={`$${monthlyRevenue.toFixed(2)}`}
           description="Compared to last month"
           change="+18.7%"
           trend="up"
@@ -86,13 +153,13 @@ export default async function DashboardPage() {
         />
 
         <StatsCard
-          title="Orders"
-          value="248"
-          description="Pending Orders"
-          change="+6.1%"
-          trend="up"
-          icon={<ShoppingCart size={28} />}
-        />
+  title="Orders"
+  value={String(orderCount ?? 0)}
+  description="Total Orders"
+  change=""
+  trend="up"
+  icon={<ShoppingCart size={28} />}
+/>
 
         <StatsCard
           title="Products"
@@ -114,7 +181,7 @@ export default async function DashboardPage() {
 
         <StatsCard
           title="Low Stock"
-          value="12"
+          value={String(lowStockProducts?.length ?? 0)}
           description="Need Restocking"
           change="-2"
           trend="down"
@@ -132,7 +199,7 @@ export default async function DashboardPage() {
 
         <StatsCard
           title="Average Order"
-          value="$92"
+          value={`$${averageOrderValue.toFixed(2)}`}
           description="Average Order Value"
           change="+5.2%"
           trend="up"
@@ -150,7 +217,7 @@ export default async function DashboardPage() {
       {/* Tables */}
 
       <div className="grid grid-cols-2 gap-6">
-        <RecentOrders />
+        <RecentOrders orders={[]} />
         <TopProducts
   products={latestProducts ?? []}
 />
@@ -158,7 +225,9 @@ export default async function DashboardPage() {
 
       <div className="grid grid-cols-2 gap-6">
         <LatestCustomers />
-        <LowStockProducts />
+        <LowStockProducts
+  products={lowStockProducts ?? []}
+/>
       </div>
 
       <div className="grid grid-cols-2 gap-6">
