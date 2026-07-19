@@ -1,204 +1,100 @@
 # 🛍️ Lumora
 
-A modern, full-stack ecommerce platform built with **Next.js**, **TypeScript**, **Tailwind CSS**, and **Supabase**.
+A modern full-stack eCommerce Admin Dashboard built with **Next.js 16**, **TypeScript**, **Tailwind CSS**, and **Supabase**.
 
-Lumora is a production-oriented single-seller ecommerce solution inspired by Shopify and WooCommerce. It provides a powerful admin dashboard for managing products, orders, customers, inventory, analytics, and store settings while delivering a fast, SEO-friendly storefront for customers.
+Lumora provides a complete administration system for managing products, categories, media uploads, and dashboard analytics with a scalable architecture suitable for production-ready eCommerce applications.
 
 ---
 
-# 🚀 Tech Stack
+## 🚀 Features
 
-### Frontend
+### 📊 Dashboard
+- Live dashboard statistics
+- Product count
+- Category count
+- Responsive admin layout
+- KPI cards
+- Analytics-ready architecture
+
+### 📦 Product Management
+- Create products
+- Update products
+- Delete products
+- Product listing
+- Product details
+- Dynamic edit pages
+- SEO fields
+- Inventory management
+- Pricing management
+- Brand support
+- Product media
+- Category assignment
+
+### 🏷 Category Management
+- Create categories
+- Edit categories
+- Delete categories
+- Category selection inside products
+
+### 🖼 Media Uploads
+- Image upload to Supabase Storage
+- Public image URLs
+- Product image preview
+- Next.js Image optimization
+
+### 🔐 Authentication
+- Secure admin authentication
+- Protected dashboard routes
+- Server-side Supabase authentication
+
+### 🗄 Database
+- PostgreSQL (Supabase)
+- Row Level Security (RLS)
+- UUID primary keys
+- Foreign key relationships
+- Scalable relational schema
+
+---
+
+# 🛠 Tech Stack
 
 - Next.js 16 (App Router)
 - React
 - TypeScript
 - Tailwind CSS
-- Lucide React Icons
-
-### Backend
-
 - Supabase
 - PostgreSQL
-- Supabase Authentication
 - Supabase Storage
-- Row Level Security (RLS)
-
-### Deployment
-
-- Vercel (planned)
-- Supabase Cloud
+- Lucide React
 
 ---
 
-# ✨ Features
-
-## Admin Dashboard
-
-- Modern responsive dashboard
-- Store statistics
-- Revenue analytics
-- KPI cards
-- Sales overview
-- Inventory monitoring
-- Activity feed
-- Quick actions
-
----
-
-## Product Management
-
-- Add products
-- Edit products
-- Delete products
-- Product categories
-- Product images
-- Product videos
-- SKU management
-- Inventory management
-- Product status
-- SEO fields
-
----
-
-## Storefront
-
-- Product listing
-- Product details
-- Search
-- Categories
-- Responsive design
-- SEO optimized pages
-
----
-
-## Orders
-
-- Order management
-- Order tracking
-- Customer details
-- Payment status
-- Shipping status
-
----
-
-## Customers
-
-- Customer profiles
-- Purchase history
-- Customer analytics
-
----
-
-## Analytics
-
-- Revenue
-- Sales
-- Orders
-- Inventory
-- Best-selling products
-- Customer growth
-- Conversion rate
-
----
-
-# 📂 Project Structure
+# 📁 Project Structure
 
 ```
 app/
-│
-├── admin/
-│   ├── dashboard/
-│   ├── products/
-│   ├── orders/
-│   ├── customers/
-│   ├── analytics/
-│   └── settings/
-│
-├── components/
-│   └── dashboard/
-│
-├── lib/
-├── utils/
-├── types/
-└── ...
+components/
+database/
+public/
+types/
+utils/
+
 ```
 
 ---
 
-# 🎯 Current Progress
-
-## ✅ Completed
-
-- Project initialization
-- Next.js setup
-- TypeScript setup
-- Tailwind CSS setup
-- Supabase integration
-- Environment configuration
-- Admin dashboard layout
-- Sidebar
-- Header
-- KPI Cards
-- Revenue Analytics placeholder
-- Reusable dashboard components
-- GitHub repository initialized
-
----
-
-## 🚧 In Progress
-
-- Product Management System
-
----
-
-## 📅 Planned
-
-### Database
-
-- Products
-- Categories
-- Orders
-- Customers
-- Reviews
-- Coupons
-
-### Admin
-
-- Product CRUD
-- Image upload
-- Video upload
-- Inventory management
-
-### Storefront
-
-- Homepage
-- Product pages
-- Category pages
-- Search
-
-### Ecommerce
-
-- Shopping cart
-- Checkout
-- Stripe integration
-- Order management
-
-### Analytics
-
-- Live dashboard
-- Charts
-- Sales reports
-- Customer insights
-
----
-
-# 🛠️ Installation
+# ⚙️ Installation
 
 Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/yourusername/lumora.git
+```
+
+Move into the project
+
+```bash
+cd lumora
 ```
 
 Install dependencies
@@ -207,11 +103,17 @@ Install dependencies
 npm install
 ```
 
-Create environment variables
+Create an environment file
+
+```
+.env.local
+```
+
+Add your Supabase credentials
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=your_url
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your_key
+NEXT_PUBLIC_SUPABASE_URL=YOUR_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=YOUR_SUPABASE_KEY
 ```
 
 Run the development server
@@ -220,53 +122,53 @@ Run the development server
 npm run dev
 ```
 
-Build production
+---
 
-```bash
-npm run build
-```
+# 📷 Screenshots
+
+Coming Soon
 
 ---
 
-# 📈 Development Philosophy
+# 🚧 Roadmap
 
-This project is being built using a production-first approach.
-
-Instead of rapidly building features, every module is designed with scalability, maintainability, and clean architecture in mind.
-
-The project follows:
-
-- Component-based architecture
-- Reusable UI components
-- Type-safe development
-- Clean folder structure
-- SEO best practices
-- Modern React patterns
-- Incremental development
+- Dashboard Analytics
+- Orders Module
+- Customers Module
+- Public Storefront
+- Shopping Cart
+- Checkout
+- Payments
+- Reviews
+- Search & Filtering
+- Product Variants
+- Sales Reports
 
 ---
 
-# 📌 Roadmap
+# 🎯 Current Status
 
-- [x] Project setup
-- [x] Admin dashboard foundation
-- [ ] Product database
-- [ ] Product CRUD
-- [ ] Image upload
-- [ ] Categories
-- [ ] Inventory
-- [ ] Storefront
-- [ ] Cart
-- [ ] Checkout
-- [ ] Authentication
-- [ ] Orders
-- [ ] Reviews
-- [ ] Analytics
-- [ ] Deployment
+✅ Authentication
+
+✅ Products CRUD
+
+✅ Categories CRUD
+
+✅ Image Upload
+
+✅ Supabase Storage
+
+✅ Dashboard (Live Counts)
+
+🚧 Dashboard Analytics
+
+🚧 Orders
+
+🚧 Storefront
 
 ---
 
-# 📄 License
+# 📜 License
 
 This project is licensed under the MIT License.
 
@@ -276,4 +178,4 @@ This project is licensed under the MIT License.
 
 **Adeel Abbas**
 
-Building **Lumora** as a production-grade ecommerce platform to strengthen full-stack development skills and showcase modern web engineering practices.
+Built as a portfolio project to demonstrate modern full-stack web development using the latest React ecosystem and Supabase.
