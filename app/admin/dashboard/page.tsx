@@ -6,11 +6,10 @@ import TopProducts from "../../components/dashboard/TopProducts";
 import RecentOrders from "../../components/dashboard/RecentOrders";
 import { getDashboardAnalytics } from "./analytics";
 import SalesChart from "../../components/dashboard/SalesChart";
-
-const LatestCustomers = () => <div className="card">Latest Customers</div>;
+import ActivityFeed from "../../components/dashboard/ActivityFeed";
+import LatestCustomers from "../../components/dashboard/LatestCustomers";
 
 const RecentReviews = () => <div className="card">Recent Reviews</div>;
-const ActivityFeed = () => <div className="card">Activity Feed</div>;
 const QuickActions = () => <div className="card">Quick Actions</div>;
 
 import {
@@ -25,16 +24,17 @@ import {
 } from "lucide-react";
 
 export default async function DashboardPage() {
-  const {
-    productCount,
-    categoryCount,
-    orderCount,
-    orders,
-    latestProducts,
-    lowStockProducts,
-    recentOrders,
-  } = await getDashboardData();
-
+ const {
+  productCount,
+  categoryCount,
+  orderCount,
+  orders,
+  latestProducts,
+  lowStockProducts,
+  recentOrders,
+  latestCustomers,
+  activityFeed,
+} = await getDashboardData();
 const {
   todayRevenue,
   monthlyRevenue,
@@ -146,7 +146,9 @@ const {
       </div>
 
       <div className="grid grid-cols-2 gap-6">
-        <LatestCustomers />
+        <LatestCustomers
+  customers={latestCustomers ?? []}
+/>
         <LowStockProducts
   products={lowStockProducts ?? []}
 />
@@ -154,7 +156,9 @@ const {
 
       <div className="grid grid-cols-2 gap-6">
         <RecentReviews />
-        <ActivityFeed />
+       <ActivityFeed
+  activities={activityFeed}
+/>
       </div>
 
       <QuickActions />
