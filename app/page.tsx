@@ -1,26 +1,26 @@
-import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
+import Navbar from "@/components/storefront/Navbar";
+import Hero from "@/components/storefront/Hero";
+import FeaturedCategories from "@/components/storefront/FeaturedCategories";
 
-export default async function Page() {
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
-
-  const { data: todos, error } = await supabase
-    .from("todos")
-    .select();
-
-  console.log("Data:", todos);
-  console.log("Error:", error);
+import FeaturedProducts from "@/components/storefront/FeaturedProducts";
+import { getFeaturedProducts } from "./storefront/queries";
+export default async function HomePage() {
+  const featuredProducts =
+    await getFeaturedProducts();
 
   return (
-    <main style={{ padding: "20px", color: "white" }}>
-      <h1>Supabase Connection Test</h1>
+    <main className="min-h-screen bg-slate-950">
 
-      <h2>Data</h2>
-      <pre>{JSON.stringify(todos, null, 2)}</pre>
+      <Navbar />
 
-      <h2>Error</h2>
-      <pre>{JSON.stringify(error, null, 2)}</pre>
+      <Hero />
+
+      <FeaturedCategories />
+
+      <FeaturedProducts
+        products={featuredProducts}
+      />
+
     </main>
   );
 }
