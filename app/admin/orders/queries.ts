@@ -15,3 +15,20 @@ export async function getOrders() {
 
   return data ?? [];
 }
+
+export async function getOrder(id: string) {
+  const cookieStore = await cookies();
+
+  const supabase = createClient(cookieStore);
+
+  const { data } = await supabase
+    .from("orders")
+    .select(`
+      *,
+      order_items (*)
+    `)
+    .eq("id", id)
+    .single();
+
+  return data;
+}
