@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { StoreProduct } from "@/types/storefront";
-
+import AddToCartButton from "@/components/cart/AddToCartButton";
 interface Props {
   product: StoreProduct;
 }
@@ -66,9 +66,7 @@ export default function ProductDetails({
 
         </div>
 
-        <button className="rounded-xl bg-emerald-600 px-8 py-4 font-semibold text-white transition hover:scale-105 hover:bg-emerald-500">
-          Add To Cart
-        </button>
+        <AddToCartButton product={product} />
 
       </div>
 
