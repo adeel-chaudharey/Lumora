@@ -1,16 +1,16 @@
 import { getDashboardData } from "./queries";
-import StatsCard from "../../components/dashboard/StatsCard";
-import RevenueChart from "../../components/dashboard/RevenueChart";
-import LowStockProducts from "../../components/dashboard/LowStockProducts";
-import TopProducts from "../../components/dashboard/TopProducts";
-import RecentOrders from "../../components/dashboard/RecentOrders";
+import StatsCard from "../../../components/dashboard/StatsCard";
+import RevenueChart from "../../../components/dashboard/RevenueChart";
+import LowStockProducts from "../../../components/dashboard/LowStockProducts";
+import TopProducts from "../../../components/dashboard/TopProducts";
+import RecentOrders from "../../../components/dashboard/RecentOrders";
 import { getDashboardAnalytics } from "./analytics";
-import SalesChart from "../../components/dashboard/SalesChart";
-import ActivityFeed from "../../components/dashboard/ActivityFeed";
-import LatestCustomers from "../../components/dashboard/LatestCustomers";
+import SalesChart from "../../../components/dashboard/SalesChart";
+import ActivityFeed from "../../../components/dashboard/ActivityFeed";
+import LatestCustomers from "../../../components/dashboard/LatestCustomers";
 
 const RecentReviews = () => <div className="card">Recent Reviews</div>;
-import QuickActions from "../../components/dashboard/QuickActions";
+import QuickActions from "../../../components/dashboard/QuickActions";
 
 import {
   DollarSign,

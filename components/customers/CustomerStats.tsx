@@ -1,6 +1,6 @@
 import { Users, DollarSign, ShoppingCart, Star } from "lucide-react";
 import { Customer } from "@/app/admin/customers/types";
-import StatsCard from "@/app/components/dashboard/StatsCard";
+import StatsCard from "@/components/dashboard/StatsCard";
 
 interface Props {
   customers: Customer[];

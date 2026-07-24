@@ -1,5 +1,5 @@
 import { Order } from "@/app/admin/orders/types";
-import StatsCard from "@/app/components/dashboard/StatsCard";
+import StatsCard from "@/components/dashboard/StatsCard";
 import {
   ShoppingCart,
   DollarSign,
