@@ -68,3 +68,5 @@ export default function LowStockProducts({
     </div>
   );
 }
+
+//added add to cart button
