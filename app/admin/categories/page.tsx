@@ -88,3 +88,5 @@ export default async function CategoriesPage() {
     </div>
   );
 }
+
+//product categories
