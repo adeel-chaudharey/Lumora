@@ -54,3 +54,7 @@ enable row level security;
 
 //first database migration
 //will be changed soon
+
+
+
+//reviews slug
