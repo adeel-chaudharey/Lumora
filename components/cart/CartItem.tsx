@@ -1,15 +1,51 @@
 import React from 'react'
 
-const dontknow
+import Image from "next/image";
 
-= () => {
-  return (
-    <div>dont know
-
-
-    </div>
-  )
+interface CartProduct {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image: string;
 }
 
-export default dontknow
+interface Props {
+  item: CartProduct;
+}
 
+export default function CartItem({ item }: Props) {
+  return (
+    <div className="flex items-center justify-between rounded-2xl border border-slate-800 bg-slate-900 p-6">
+      <div className="flex items-center gap-5">
+        <Image
+          src={item.image}
+          alt={item.name}
+          width={90}
+          height={90}
+          className="rounded-xl object-cover"
+        />
+
+        <div>
+          <h3 className="text-lg font-semibold text-white">
+            {item.name}
+          </h3>
+
+          <p className="mt-2 text-slate-400">
+            ${item.price.toFixed(2)}
+          </p>
+        </div>
+      </div>
+
+      <div className="text-right">
+        <p className="text-white">
+          Qty: {item.quantity}
+        </p>
+
+        <p className="mt-2 font-semibold text-emerald-400">
+          ${(item.price * item.quantity).toFixed(2)}
+        </p>
+      </div>
+    </div>
+  );
+}
