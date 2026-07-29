@@ -1,25 +1,8 @@
 import CartList from "@/components/cart/CartList";
 import CartSummary from "@/components/cart/CartSummary";
-
-export default function CartPage() {
-  const cartItems = [
-    {
-      id: "1",
-      name: "Lumora Hoodie",
-      price: 79.99,
-      quantity: 2,
-      image:
-        "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600",
-    },
-    {
-      id: "2",
-      name: "Wireless Headphones",
-      price: 129.99,
-      quantity: 1,
-      image:
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600",
-    },
-  ];
+import { getCartItems } from "./queries";
+export default async function CartPage() {
+ const cartItems = await getCartItems();
 
   return (
     <main className="min-h-screen bg-slate-950">
