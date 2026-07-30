@@ -17,10 +17,47 @@ export async function login(formData: FormData) {
   });
 
   if (error) {
+    return { error: error.message };
+  }
+
+  redirect("/admin/dashboard");
+}
+export async function signup(formData: FormData) {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+
+  if (error) {
     return {
       error: error.message,
     };
   }
 
-  redirect("/admin/dashboard");
+  if (data.user) {
+    await supabase.from("customers").insert({
+      id: data.user.id,
+      email: data.user.email,
+      full_name: "",
+      role: "customer",
+    });
+  }
+
+  redirect("/auth/login");
+}
+
+
+export async function logout() {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+
+  await supabase.auth.signOut();
+
+  redirect("/auth/login");
 }

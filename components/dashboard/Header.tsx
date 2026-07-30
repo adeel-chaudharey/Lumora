@@ -1,3 +1,7 @@
+import { logout } from "@/app/auth/actions";
+
+
+
 export default function Header() {
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long",
