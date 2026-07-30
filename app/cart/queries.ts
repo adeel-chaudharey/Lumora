@@ -4,22 +4,18 @@ import { createClient } from "@/utils/supabase/server";
 export interface CartItemData {
   id: string;
   quantity: number;
-  product: {
-    id: string;
-    name: string;
-    slug: string;
-    price: number;
-    image_url: string | null;
-  };
+  name: string;
+  price: number;
+  image: string | null;
 }
 
 export async function getCartItems(): Promise<CartItemData[]> {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
-  // Temporary customer ID (replace after auth)
- const customerId =
-  "1d266cc6-16f9-485c-a55c-5598d4602cbf";
+  // Temporary customer ID (replace after authentication)
+  const customerId =
+    "1d266cc6-16f9-485c-a55c-5598d4602cbf";
 
   const { data, error } = await supabase
     .from("cart_items")
@@ -36,12 +32,24 @@ export async function getCartItems(): Promise<CartItemData[]> {
     `)
     .eq("customer_id", customerId);
 
-  console.log(data);
+
+
+console.log("Customer ID:", customerId);
+console.log("Raw data:", data);
+
 
   if (error) {
-  console.log("SUPABASE ERROR:", error);
-  throw error;
-}
+    console.error(error);
+    return [];
+  }
 
-  return (data as CartItemData[]) ?? [];
+  return (
+    data?.map((item: any) => ({
+      id: item.id,
+      quantity: item.quantity,
+      name: item.product.name,
+      price: item.product.price,
+      image: item.product.image_url,
+    })) ?? []
+  );
 }

@@ -1,5 +1,3 @@
-import React from 'react'
-
 import Image from "next/image";
 
 interface CartProduct {
@@ -7,7 +5,7 @@ interface CartProduct {
   name: string;
   price: number;
   quantity: number;
-  image: string;
+  image: string | null;
 }
 
 interface Props {
@@ -18,13 +16,19 @@ export default function CartItem({ item }: Props) {
   return (
     <div className="flex items-center justify-between rounded-2xl border border-slate-800 bg-slate-900 p-6">
       <div className="flex items-center gap-5">
-        <Image
-          src={item.image}
-          alt={item.name}
-          width={90}
-          height={90}
-          className="rounded-xl object-cover"
-        />
+        {item.image ? (
+          <Image
+            src={item.image}
+            alt={item.name}
+            width={90}
+            height={90}
+            className="rounded-xl object-cover"
+          />
+        ) : (
+          <div className="flex h-[90px] w-[90px] items-center justify-center rounded-xl bg-slate-800 text-3xl">
+            📦
+          </div>
+        )}
 
         <div>
           <h3 className="text-lg font-semibold text-white">
@@ -39,27 +43,22 @@ export default function CartItem({ item }: Props) {
 
       <div className="text-right">
         <div className="flex items-center gap-3">
-      <button className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-white transition hover:bg-slate-700">
-        −
-      </button>
+          <button className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-white transition hover:bg-slate-700">
+            −
+          </button>
 
-      <span className="w-6 text-center text-white">
-        {item.quantity}
-      </span>
+          <span className="w-6 text-center text-white">
+            {item.quantity}
+          </span>
 
-      <button className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-white transition hover:bg-slate-700">
-        +
-      </button>
-    </div>
+          <button className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-white transition hover:bg-slate-700">
+            +
+          </button>
+        </div>
 
-
-
-    <button className="mt-4 text-sm text-red-400 transition hover:text-red-300">
-      Remove
-    </button>
-
-
-
+        <button className="mt-4 text-sm text-red-400 transition hover:text-red-300">
+          Remove
+        </button>
 
         <p className="mt-2 font-semibold text-emerald-400">
           ${(item.price * item.quantity).toFixed(2)}
