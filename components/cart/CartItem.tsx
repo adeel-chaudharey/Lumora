@@ -1,5 +1,12 @@
+"use client";
 import Image from "next/image";
-
+import { useTransition } from "react";
+import { useRouter } from "next/navigation";
+import {
+  increaseQuantity,
+  decreaseQuantity,
+  removeCartItem,
+} from "@/app/cart/actions";
 interface CartProduct {
   id: string;
   name: string;
@@ -13,6 +20,33 @@ interface Props {
 }
 
 export default function CartItem({ item }: Props) {
+
+
+const [isPending, startTransition] = useTransition();
+const router = useRouter();
+
+function handleIncrease() {
+  startTransition(async () => {
+    await increaseQuantity(item.id);
+    router.refresh();
+  });
+}
+
+function handleDecrease() {
+  startTransition(async () => {
+    await decreaseQuantity(item.id);
+    router.refresh();
+  });
+}
+
+
+function handleRemove() {
+  startTransition(async () => {
+    await removeCartItem(item.id);
+    router.refresh();
+  });
+}
+
   return (
     <div className="flex items-center justify-between rounded-2xl border border-slate-800 bg-slate-900 p-6">
       <div className="flex items-center gap-5">
@@ -43,22 +77,34 @@ export default function CartItem({ item }: Props) {
 
       <div className="text-right">
         <div className="flex items-center gap-3">
-          <button className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-white transition hover:bg-slate-700">
-            −
-          </button>
+          <button
+  onClick={handleDecrease}
+  disabled={isPending}
+  className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-white transition hover:bg-slate-700 disabled:opacity-50"
+>
+  −
+</button>
 
           <span className="w-6 text-center text-white">
             {item.quantity}
           </span>
 
-          <button className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-white transition hover:bg-slate-700">
-            +
-          </button>
+          <button
+  onClick={handleIncrease}
+  disabled={isPending}
+  className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-white transition hover:bg-slate-700 disabled:opacity-50"
+>
+  +
+</button>
         </div>
 
-        <button className="mt-4 text-sm text-red-400 transition hover:text-red-300">
-          Remove
-        </button>
+        <button
+  onClick={handleRemove}
+  disabled={isPending}
+  className="mt-4 text-sm text-red-400 transition hover:text-red-300 disabled:opacity-50"
+>
+  Remove
+</button>
 
         <p className="mt-2 font-semibold text-emerald-400">
           ${(item.price * item.quantity).toFixed(2)}
