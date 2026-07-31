@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
+
 
 import { createClient } from "@/utils/supabase/server";
 
@@ -12,8 +12,7 @@ export default async function AdminLayout({
 }: {
   children: ReactNode;
 }) {
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+ const supabase = await createClient();
 
   // Check authenticated user
   const {
