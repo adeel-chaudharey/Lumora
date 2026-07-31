@@ -62,15 +62,38 @@ export default function Header() {
           + Add Product
         </button>
 
-        <div className="text-right">
-          <p className="text-white font-semibold">
-            Admin
-          </p>
+        <div className="flex items-center gap-6">
+  <div className="text-right">
+    <p className="text-white font-semibold">
+      Admin
+    </p>
 
-          <p className="text-slate-400 text-sm">
-            {today}
-          </p>
-        </div>
+    <p className="text-slate-400 text-sm">
+      {today}
+    </p>
+  </div>
+
+  <form action={logout}>
+    <button
+      type="submit"
+      className="
+        rounded-xl
+        border
+        border-red-500
+        px-5
+        py-3
+        font-semibold
+        text-red-400
+        transition-all
+        duration-300
+        hover:bg-red-500
+        hover:text-white
+      "
+    >
+      Logout
+    </button>
+  </form>
+</div>
 
       </div>
     </header>
