@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
+
 export async function login(formData: FormData) {
   const supabase = await createClient();
 
@@ -19,26 +20,9 @@ export async function login(formData: FormData) {
     };
   }
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/auth/login");
-  }
-
-  const { data: customer } = await supabase
-    .from("customers")
-    .select("role")
-    .eq("id", user.id)
-    .single();
-
-  if (customer?.role === "admin") {
-    redirect("/admin/dashboard");
-  }
-
   redirect("/");
 }
+
 export async function signup(formData: FormData) {
   const supabase = await createClient();
 
