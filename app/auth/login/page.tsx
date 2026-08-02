@@ -1,8 +1,28 @@
+import { redirect } from "next/navigation";
+import { createClient } from "@/utils/supabase/server";
 import { login } from "../actions";
 
+export default async function LoginPage() {
+  const supabase = await createClient();
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-export default function LoginPage() {
+  if (user) {
+    const { data: customer } = await supabase
+      .from("customers")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+
+    if (customer?.role === "admin") {
+      redirect("/admin/dashboard");
+    }
+
+    redirect("/");
+  }
+
   return (
     <main className="flex min-h-screen items-center justify-center bg-slate-950 px-6">
       <div className="w-full max-w-md rounded-3xl border border-slate-800 bg-slate-900 p-10 shadow-2xl">
@@ -14,7 +34,7 @@ export default function LoginPage() {
           Sign in to your Lumora account
         </p>
 
-       <form action={login} className="space-y-5">
+        <form action={login} className="space-y-5">
           <div>
             <label className="mb-2 block text-sm text-slate-300">
               Email

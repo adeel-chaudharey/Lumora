@@ -19,25 +19,25 @@ export async function login(formData: FormData) {
     };
   }
 
- const {
-  data: { user },
-} = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-if (!user) {
-  redirect("/auth/login");
-}
+  if (!user) {
+    redirect("/auth/login");
+  }
 
-const { data: customer } = await supabase
-  .from("customers")
-  .select("role")
-  .eq("id", user.id)
-  .single();
+  const { data: customer } = await supabase
+    .from("customers")
+    .select("role")
+    .eq("id", user.id)
+    .single();
 
-if (customer?.role === "admin") {
-  redirect("/admin/dashboard");
-}
+  if (customer?.role === "admin") {
+    redirect("/admin/dashboard");
+  }
 
-redirect("/");
+  redirect("/");
 }
 export async function signup(formData: FormData) {
   const supabase = await createClient();
