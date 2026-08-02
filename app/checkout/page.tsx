@@ -2,8 +2,12 @@ import CheckoutForm from "@/components/checkout/CheckoutForm";
 import AddressSelector from "@/components/checkout/AddressSelector";
 import OrderSummary from "@/components/checkout/OrderSummary";
 import PaymentSection from "@/components/checkout/PaymentSection";
+import { getCheckoutData } from "./queries";
+export default async function CheckoutPage() {
 
-export default function CheckoutPage() {
+const cartItems = await getCheckoutData();
+
+
   return (
     <main className="min-h-screen bg-slate-950">
       <section className="mx-auto max-w-7xl px-8 py-12">
@@ -18,9 +22,7 @@ export default function CheckoutPage() {
             <PaymentSection />
           </div>
 
-          <div>
-            <OrderSummary />
-          </div>
+          <OrderSummary cartItems={cartItems} />
         </div>
       </section>
     </main>
