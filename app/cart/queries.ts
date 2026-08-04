@@ -11,7 +11,7 @@ export interface CartItemData {
 
 export async function getCartItems(): Promise<CartItemData[]> {
   const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+  const supabase =await createClient(cookieStore);
 
   // Temporary customer ID (replace after authentication)
   const customerId =

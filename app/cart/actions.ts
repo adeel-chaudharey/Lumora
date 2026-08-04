@@ -8,7 +8,7 @@ const CUSTOMER_ID =
 
 export async function increaseQuantity(cartItemId: string) {
   const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+  const supabase =await createClient(cookieStore);
 
   const { data } = await supabase
     .from("cart_items")
@@ -30,7 +30,7 @@ export async function increaseQuantity(cartItemId: string) {
 
 export async function decreaseQuantity(cartItemId: string) {
   const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+  const supabase =await createClient(cookieStore);
 
   const { data } = await supabase
     .from("cart_items")
@@ -56,7 +56,7 @@ export async function decreaseQuantity(cartItemId: string) {
 
 export async function removeCartItem(cartItemId: string) {
   const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+  const supabase =await createClient(cookieStore);
 
   await supabase
     .from("cart_items")
