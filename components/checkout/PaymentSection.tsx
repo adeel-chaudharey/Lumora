@@ -1,4 +1,5 @@
 import { ShieldCheck } from "lucide-react";
+import { createCheckoutSession } from "@/app/checkout/actions";
 
 export default function PaymentSection() {
   return (
@@ -28,11 +29,13 @@ export default function PaymentSection() {
         </div>
 
         <div className="mt-8">
-          <button
-            className="w-full rounded-xl bg-emerald-600 px-6 py-4 text-lg font-semibold text-white transition hover:bg-emerald-500"
-          >
-            Pay with Stripe
-          </button>
+         <form action={createCheckoutSession}>
+  <button
+    className="w-full rounded-xl bg-emerald-600 px-6 py-4 text-lg font-semibold text-white transition hover:bg-emerald-500"
+  >
+    Pay with Stripe
+  </button>
+</form>
         </div>
 
         <div className="mt-5 text-center text-sm text-slate-500">
