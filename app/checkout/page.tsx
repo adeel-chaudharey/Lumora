@@ -3,6 +3,7 @@ import AddressSelector from "@/components/checkout/AddressSelector";
 import OrderSummary from "@/components/checkout/OrderSummary";
 import PaymentSection from "@/components/checkout/PaymentSection";
 import { getCheckoutData } from "./queries";
+
 export default async function CheckoutPage() {
 
 const cartItems = await getCheckoutData();
