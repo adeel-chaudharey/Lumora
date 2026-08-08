@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 
 export interface CartItemData {
@@ -10,12 +9,15 @@ export interface CartItemData {
 }
 
 export async function getCartItems(): Promise<CartItemData[]> {
-  const cookieStore = await cookies();
-  const supabase =await createClient(cookieStore);
+  const supabase = await createClient();
 
-  // Temporary customer ID (replace after authentication)
-  const customerId =
-    "1d266cc6-16f9-485c-a55c-5598d4602cbf";
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return [];
+  }
 
   const { data, error } = await supabase
     .from("cart_items")
@@ -30,21 +32,15 @@ export async function getCartItems(): Promise<CartItemData[]> {
         image_url
       )
     `)
-    .eq("customer_id", customerId);
-
-
-
-console.log("Customer ID:", customerId);
-console.log("Raw data:", data);
-
+    .eq("customer_id", user.id);
 
   if (error) {
-    console.error(error);
+    console.error("Failed to fetch cart:", error);
     return [];
   }
 
   return (
-    data?.map((item: any) => ({
+    data?.map((item) => ({
       id: item.id,
       quantity: item.quantity,
       name: item.product.name,
