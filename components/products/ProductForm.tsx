@@ -96,6 +96,7 @@ if (imageFile) {
 
 
 const productData = {
+   status: "published",
   name: formData.name,
   slug: formData.slug,
   short_description: formData.shortDescription,
