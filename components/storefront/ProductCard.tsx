@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+
 import { StoreProduct } from "@/types/storefront";
 
 interface Props {
   product: StoreProduct;
 }
-export default function ProductCard({
-  product,
-}: Props) {
+
+export default function ProductCard({ product }: Props) {
   return (
     <Link
       href={`/products/${product.slug}`}
@@ -17,12 +17,12 @@ export default function ProductCard({
         <Image
           src={product.image_url}
           alt={product.name}
-          width={500}
-          height={400}
-          className="h-64 w-full object-cover"
+          width={400}
+          height={300}
+          className="h-60 w-full object-cover"
         />
       ) : (
-        <div className="flex h-64 items-center justify-center bg-slate-800 text-6xl">
+        <div className="flex h-60 items-center justify-center bg-slate-800 text-6xl">
           📦
         </div>
       )}
@@ -32,12 +32,14 @@ export default function ProductCard({
           {product.name}
         </h3>
 
-        <p className="mt-3 line-clamp-2 text-slate-400">
-          {product.short_description}
-        </p>
+        {product.short_description && (
+          <p className="mt-3 line-clamp-2 text-slate-400">
+            {product.short_description}
+          </p>
+        )}
 
         <p className="mt-6 text-2xl font-bold text-emerald-400">
-          ${product.price}
+          ${product.price.toFixed(2)}
         </p>
       </div>
     </Link>
