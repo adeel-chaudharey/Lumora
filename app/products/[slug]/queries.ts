@@ -20,3 +20,4 @@ export async function getProduct(
 
 
 //store front connected to the db
+//promise function to get product by slug
