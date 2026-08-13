@@ -17,3 +17,6 @@ export async function getProduct(
 
   return data;
 }
+
+
+//store front connected to the db
