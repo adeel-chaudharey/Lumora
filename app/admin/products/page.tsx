@@ -10,7 +10,7 @@ import DeleteButton from "@/components/products/sections/DeleteButton";
 
 
 export default async function ProductsPage() {
-  const supabase = await createClient();
+  const supabase = await createClient(await cookies());
 
   const result = await supabase
   .from("products")

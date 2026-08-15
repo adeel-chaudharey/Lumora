@@ -44,24 +44,7 @@ export default function Header() {
           "
         />
 
-        <button
-          className="
-            bg-emerald-500
-            hover:bg-emerald-400
-            text-slate-950
-            font-semibold
-            rounded-xl
-            px-6
-            py-3
-            transition-all
-            duration-300
-            hover:scale-105
-            hover:shadow-[0_0_20px_rgba(52,211,153,0.35)]
-          "
-        >
-          + Add Product
-        </button>
-
+        
         <div className="flex items-center gap-6">
   <div className="text-right">
     <p className="text-white font-semibold">
@@ -91,11 +74,11 @@ export default function Header() {
       "
     >
       Logout
-    </button>
-  </form>
-</div>
+      </button>
+      </form>
+      </div>
 
       </div>
     </header>
-  );
+);
 }

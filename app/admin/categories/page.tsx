@@ -2,9 +2,9 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import DeleteCategoryButton from "@/components/categories/DeleteCategoryButton";
+
 export default async function CategoriesPage() {
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = await createClient(await cookies());
 
   const { data: categories } = await supabase
     .from("categories")

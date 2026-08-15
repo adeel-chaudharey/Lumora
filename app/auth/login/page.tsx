@@ -1,9 +1,10 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import { login } from "../actions";
+import { cookies } from "next/headers";
 
 export default async function LoginPage() {
-  const supabase = await createClient();
+  const supabase = await createClient(await cookies());
 
   const {
     data: { user },
@@ -35,7 +36,7 @@ export default async function LoginPage() {
         </p>
 
         <form
-          action={async (formData: FormData) => {
+          action={async (formData) => {
             "use server";
             await login(formData);
           }}

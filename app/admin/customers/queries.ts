@@ -3,7 +3,7 @@ import { createClient } from "@/utils/supabase/server";
 
 export async function getCustomers() {
   const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+  const supabase =await createClient(cookieStore);
 
   const { data } = await supabase
     .from("customers")
@@ -17,7 +17,7 @@ export async function getCustomers() {
 
 export async function getCustomer(id: string) {
   const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = await createClient(cookieStore);
 
   const { data } = await supabase
     .from("customers")
