@@ -10,8 +10,7 @@ import DeleteButton from "@/components/products/sections/DeleteButton";
 
 
 export default async function ProductsPage() {
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = await createClient();
 
   const result = await supabase
   .from("products")
@@ -86,7 +85,7 @@ export default async function ProductsPage() {
       className="rounded-lg object-cover"
     />
   ) : (
-    <div className="flex h-[60px] w-[60px] items-center justify-center rounded-lg bg-slate-800 text-slate-500">
+    <div className="flex h-15 w-15 items-center justify-center rounded-lg bg-slate-800 text-slate-500">
       📦
     </div>
   )}

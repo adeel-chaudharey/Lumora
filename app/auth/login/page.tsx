@@ -34,7 +34,13 @@ export default async function LoginPage() {
           Sign in to your Lumora account
         </p>
 
-        <form action={login} className="space-y-5">
+        <form
+          action={async (formData: FormData) => {
+            "use server";
+            await login(formData);
+          }}
+          className="space-y-5"
+        >
           <div>
             <label className="mb-2 block text-sm text-slate-300">
               Email
