@@ -17,7 +17,7 @@ export default function Header() {
           Dashboard
         </h1>
 
-        <p className="text-slate-400 mt-2">
+        <p className="text-slate-400 mt-2 px-2">
           Welcome back! Here&apos;s what&apos;s happening in your store today.
         </p>
       </div>
