@@ -1,13 +1,10 @@
-import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
-import { StoreProduct } from "@/types/storefront";
+import { StoreProduct } from "@/types/Storefront";
 
 export async function getProduct(
   slug: string
 ): Promise<StoreProduct | null> {
-  const cookieStore = await cookies();
-
-  const supabase =await createClient(cookieStore);
+  const supabase = await createClient();
 
   const { data } = await supabase
     .from("products")
