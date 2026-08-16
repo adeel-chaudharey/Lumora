@@ -38,10 +38,10 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 flex">
+    <div className="min-h-screen bg-slate-950">
       <Sidebar />
 
-      <main className="flex-1 overflow-auto">
+      <main className="ml-64 min-h-screen">
         <div className="p-8">
           <Header />
           {children}
@@ -50,7 +50,3 @@ export default async function AdminLayout({
     </div>
   );
 }
-
-//admin layout changed
-
-//stripe web hook is getting started  from here , rolll back if needed

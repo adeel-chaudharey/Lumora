@@ -15,35 +15,84 @@ const menuItems = [
 
 export default function Sidebar() {
   return (
-    <aside className="w-72 min-h-screen bg-slate-900 border-r border-slate-800 p-6">
-      <h1 className="text-3xl font-bold text-white mb-10">
-        Lumora<span className="text-emerald-400">.</span>
-      </h1>
+    <aside
+      className="
+        fixed
+        left-0
+        top-0
+        z-40
+        flex
+        h-screen
+        w-64
+        flex-col
+        border-r
+        border-slate-800
+        bg-slate-950
+        px-5
+        py-6
+      "
+    >
+      {/* Logo */}
+      <div className="mb-10 px-2">
+        <h1 className="text-2xl font-bold tracking-tight text-white">
+          Lumora<span className="text-emerald-400">.</span>
+        </h1>
 
-      <nav className="space-y-3">
+        <p className="mt-1 text-xs text-slate-500">
+          Admin Dashboard
+        </p>
+      </div>
+
+      {/* Navigation */}
+      <nav className="flex-1 space-y-1">
         {menuItems.map((item) => (
           <Link
             key={item.name}
             href={item.href}
             className="
-              block
+              group
+              relative
+              flex
+              items-center
               rounded-xl
-              px-5
+              px-4
               py-3
-              text-slate-300
+              text-sm
+              font-medium
+              text-slate-400
               transition-all
-              duration-300
-              hover:bg-slate-800
+              duration-200
+              hover:bg-slate-800/70
               hover:text-white
-              hover:scale-[1.03]
-              hover:border-l-4
-              hover:border-emerald-400
             "
           >
+            {/* Active/hover indicator */}
+            <span
+              className="
+                absolute
+                left-0
+                h-6
+                w-1
+                rounded-r-full
+                bg-emerald-400
+                opacity-0
+                transition-opacity
+                duration-200
+                group-hover:opacity-100
+              "
+            />
+
             {item.name}
           </Link>
         ))}
       </nav>
+
+      {/* Bottom */}
+      <div className="border-t border-slate-800 pt-4">
+        <p className="px-2 text-xs text-slate-600">
+          Lumora Admin
+        </p>
+      </div>
     </aside>
   );
 }

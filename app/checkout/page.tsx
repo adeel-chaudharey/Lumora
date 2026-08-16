@@ -6,7 +6,11 @@ import { getCheckoutData } from "./queries";
 
 export default async function CheckoutPage() {
 
-const cartItems = await getCheckoutData();
+const data = await getCheckoutData();
+const cartItems = data.flatMap(item => item.products.map(product => ({
+  ...product,
+  quantity: item.quantity
+})));
 
 
   return (

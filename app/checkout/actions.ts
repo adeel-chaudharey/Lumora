@@ -5,7 +5,7 @@ import { stripe } from "@/utils/stripe/server";
 import { createClient } from "@/utils/supabase/server";
 
 export async function createCheckoutSession() {
-  const supabase = await createClient();
+  const supabase = await createClient(await);
 
   // Get authenticated user
   const {
