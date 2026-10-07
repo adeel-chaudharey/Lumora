@@ -1,66 +1,60 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
 
-const CUSTOMER_ID =
-  "1d266cc6-16f9-485c-a55c-5598d4602cbf";
-
-export async function increaseQuantity(cartItemId: string) {
+export async function addToCart(productId: string) {
   const cookieStore = await cookies();
-  const supabase =await createClient(cookieStore);
+  const supabase = await createClient(cookieStore);
 
-  const { data } = await supabase
-    .from("cart_items")
-    .select("quantity")
-    .eq("id", cartItemId)
-    .eq("customer_id", CUSTOMER_ID)
-    .single();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  if (!data) return;
-
-  await supabase
-    .from("cart_items")
-    .update({
-      quantity: data.quantity + 1,
-    })
-    .eq("id", cartItemId);
-}
-
-
-export async function decreaseQuantity(cartItemId: string) {
-  const cookieStore = await cookies();
-  const supabase =await createClient(cookieStore);
-
-  const { data } = await supabase
-    .from("cart_items")
-    .select("quantity")
-    .eq("id", cartItemId)
-    .eq("customer_id", CUSTOMER_ID)
-    .single();
-
-  if (!data) return;
-
-  if (data.quantity <= 1) {
-    return;
+  if (!user) {
+    throw new Error("You must be logged in to add items to your cart.");
   }
 
-  await supabase
+  // Check whether this product is already in the cart
+  const { data: existingItem, error: fetchError } = await supabase
     .from("cart_items")
-    .update({
-      quantity: data.quantity - 1,
-    })
-    .eq("id", cartItemId);
-}
+    .select("id, quantity")
+    .eq("customer_id", user.id)
+    .eq("product_id", productId)
+    .maybeSingle();
 
+  if (fetchError) {
+    throw new Error(fetchError.message);
+  }
 
-export async function removeCartItem(cartItemId: string) {
-  const cookieStore = await cookies();
-  const supabase =await createClient(cookieStore);
+  if (existingItem) {
+    // Product already exists → increase quantity
+    const { error } = await supabase
+      .from("cart_items")
+      .update({
+        quantity: existingItem.quantity + 1,
+      })
+      .eq("id", existingItem.id)
+      .eq("customer_id", user.id);
 
-  await supabase
-    .from("cart_items")
-    .delete()
-    .eq("id", cartItemId)
-    .eq("customer_id", CUSTOMER_ID);
+    if (error) {
+      throw new Error(error.message);
+    }
+  } else {
+    // Product doesn't exist → create cart item
+    const { error } = await supabase
+      .from("cart_items")
+      .insert({
+        customer_id: user.id,
+        product_id: productId,
+        quantity: 1,
+      });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  revalidatePath("/cart");
 }
